@@ -7,7 +7,7 @@ const features = [
     description: "Step-by-step guides on the hottest tech stacks. From web to mobile to cloud.",
     icon: BookOpen,
     color: "gdg-blue",
-    span: "col-span-2 row-span-2",
+    span: "md:col-span-2 md:row-span-2",
     large: true
   },
   {
@@ -15,7 +15,7 @@ const features = [
     description: "Building apps live with industry mentors. Learn by doing, not just watching.",
     icon: Wrench,
     color: "gdg-red",
-    span: "col-span-1 row-span-1"
+    span: "md:col-span-1 md:row-span-1"
   },
   {
     title: "SLoP",
@@ -23,14 +23,14 @@ const features = [
     description: "Helping students enter the Open Source world through guided mentorship.",
     icon: GitBranch,
     color: "gdg-green",
-    span: "col-span-1 row-span-2"
+    span: "md:col-span-1 md:row-span-2"
   },
   {
     title: "Code Dementia",
     description: "Our Tech Blog on Medium. Deep dives, tutorials, and developer stories.",
     icon: PenTool,
     color: "gdg-yellow",
-    span: "col-span-1 row-span-1"
+    span: "md:col-span-1 md:row-span-1"
   }
 ];
 
@@ -58,7 +58,7 @@ const Features = () => {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[180px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[180px]">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
