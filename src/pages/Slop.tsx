@@ -7,11 +7,11 @@ const Slop = () => {
   return (
     <div className="min-h-screen bg-background">
       <CustomCursor />
-      <Navbar />
+      {/* <Navbar /> */}
       <main className="pt-20">
         <Features />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

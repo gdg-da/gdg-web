@@ -4,39 +4,38 @@ import { Calendar, Globe, Code, Cpu } from "lucide-react";
 const events = [
   {
     id: 1,
-    title: "GSoC Intro Session",
-    date: "November 2024",
-    description: "An introduction to Google Summer of Code - learn how to get started with open source contributions and GSoC applications.",
-    type: "Intra College",
-    icon: Globe,
-    color: "gdg-blue"
-  },
-  {
-    id: 2,
-    title: "SLoP 4.0",
-    date: "September - December 2024",
+    title: "SLoP 5.0",
+    date: "September - December 2025",
     description: "Semester Long Projects - Our flagship open source program aligned with Hacktoberfest. Mentor-guided contributions to real projects.",
-    type: "National Event",
+    type: "Open Source",
     icon: Code,
     color: "gdg-green"
   },
   {
-    id: 3,
-    title: "CodeLabs: JavaScript Edition",
-    date: "September 2024",
-    description: "Hands-on workshop covering modern JavaScript fundamentals, ES6+ features, and practical coding exercises.",
-    type: "Workshop",
-    icon: Calendar,
-    color: "gdg-red"
-  },
-  {
-    id: 4,
+    id: 2,
     title: "TechLoop: Exploring AI & Blockchain",
     date: "August 2024",
-    description: "Industry experts dive into the intersection of AI and Blockchain technologies, exploring real-world applications.",
+    description: "Introduction to the full curious world of development, with guiding from HTML to Web3 all at once.",
     type: "Tech Talk",
     icon: Cpu,
     color: "gdg-yellow"
+  },
+  {
+    id: 3,
+    title: "KDE (K Desktop Environment) Event",
+    date: "April 2025",
+    description: "3-day events of KDE with expert lead event on free and open source of KDE",
+    icon: Globe,
+    color: "gdg-blue"
+  },
+  {
+    id: 4,
+    title: "Dev-O-Lution",
+    date: "January 2025",
+    description: "Dev-o-lution is a tech conference where code evolves and innovation thrives. It has everything from workshops, talks, and mind-expanding sessions that will revolutionize your dev skills!",
+    type: "Workshop",
+    icon: Calendar,
+    color: "gdg-red"
   },
 ];
 
@@ -157,7 +156,7 @@ const Timeline = () => {
         </div>
 
         {/* View All Button */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
@@ -171,7 +170,7 @@ const Timeline = () => {
             View All Events
             <span className="dimension-marker text-muted-foreground">+more</span>
           </a>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

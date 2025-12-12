@@ -223,7 +223,7 @@ const Team = () => {
           </div>
 
           <p className="mt-4 text-muted-foreground max-w-xl">
-            The passionate individuals behind DSC DA-IICT, working together to build an amazing developer community.
+            The passionate individuals behind DSC DAU, working together to build an amazing developer community.
           </p>
         </motion.div>
 

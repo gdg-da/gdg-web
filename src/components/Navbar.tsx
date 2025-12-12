@@ -7,8 +7,8 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
   { name: "Team", href: "/team" },
-  { name: "SLoP", href: "/slop" },
-  { name: "Contact", href: "/contact" },
+  // { name: "SLoP", href: "/slop" },
+  { name: "connect", href: "#contact" },
 ];
 
 const Navbar = () => {
@@ -25,40 +25,45 @@ const Navbar = () => {
         <div className="flex items-center justify-between w-full md:grid md:grid-cols-[1fr_auto_1fr]">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 md:justify-self-start">
-            <div className="flex gap-1">
-              <div className="w-3 h-3 bg-gdg-blue" />
-              <div className="w-3 h-3 bg-gdg-red" />
-              <div className="w-3 h-3 bg-gdg-yellow" />
-              <div className="w-3 h-3 bg-gdg-green" />
-            </div>
+            <img src="/logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" />
             <div className="flex flex-col">
-              <span className="font-bold text-lg tracking-tight leading-none">DSC DA-IICT</span>
-              <span className="font-mono text-[10px] text-muted-foreground leading-none">Previously GDG on Campus DA-IICT</span>
+              <span className="font-bold text-lg tracking-tight leading-none">DSC DAU</span>
+              <span className="font-mono text-[10px] text-muted-foreground leading-none">Formerly GDG on Campus DAU</span>
             </div>
           </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8 md:justify-self-center">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="scribble-underline font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors"
-              >
-                {link.name}
-              </Link>
+              link.href.startsWith('#') ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="scribble-underline font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="scribble-underline font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors"
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </div>
 
           {/* Join Chapter Button with glitch effect */}
-          <Link
+          {/* <Link
             to="/contact"
             className="hidden md:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 font-bold text-xs uppercase tracking-wider hover:bg-gdg-blue transition-colors relative group overflow-hidden md:justify-self-end"
           >
             <span className="relative z-10">Join</span>
             <span className="absolute inset-0 bg-gdg-red translate-x-0 opacity-0 group-hover:opacity-100 group-hover:animate-glitch-1 z-0" />
             <span className="absolute inset-0 bg-gdg-blue -translate-x-0 opacity-0 group-hover:opacity-100 group-hover:animate-glitch-2 z-0" />
-          </Link>
+          </Link> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -87,13 +92,23 @@ const Navbar = () => {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link
-                      to={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors block"
-                    >
-                      {link.name}
-                    </Link>
+                    {link.href.startsWith('#') ? (
+                      <a
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors block"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="font-medium text-sm uppercase tracking-wider hover:text-gdg-blue transition-colors block"
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
                 <motion.div
@@ -101,13 +116,13 @@ const Navbar = () => {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: navLinks.length * 0.1 }}
                 >
-                  <Link
-                    to="/contact"
+                  <a
+                    href="#contact"
                     onClick={() => setIsOpen(false)}
                     className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2 font-bold text-xs uppercase tracking-wider w-full"
                   >
                     Join Chapter
-                  </Link>
+                  </a>
                 </motion.div>
               </div>
             </motion.div>

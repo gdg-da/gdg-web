@@ -20,7 +20,8 @@ const features = [
   {
     title: "SLoP",
     subtitle: "Semester Long Projects",
-    description: "Helping students enter the Open Source world through guided mentorship.",
+    description: "A hands-on open-source program where students build real projects, contribute to OSS, and gain mentorship to become industry-ready. Learn more",
+    website: "https://slop.dscdaiict.in/",
     icon: GitBranch,
     color: "gdg-green",
     span: "md:col-span-1 md:row-span-2"
@@ -28,6 +29,7 @@ const features = [
   {
     title: "Code Dementia",
     description: "Our Tech Blog on Medium. Deep dives, tutorials, and developer stories.",
+    website: "https://medium.com/code-dementia/",
     icon: PenTool,
     color: "gdg-yellow",
     span: "md:col-span-1 md:row-span-1"
@@ -58,7 +60,7 @@ const Features = () => {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[180px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-auto md:auto-rows">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -87,11 +89,22 @@ const Features = () => {
                 </div>
 
                 {/* Title */}
-                <h3 
+                <h3
                   className="text-xl md:text-2xl font-bold mb-1"
                   style={{ color: `hsl(var(--${feature.color}))` }}
                 >
-                  {feature.title}
+                  {feature.website ? (
+                    <a
+                      href={feature.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block hover:underline"
+                    >
+                      {feature.title}
+                    </a>
+                  ) : (
+                    feature.title
+                  )}
                 </h3>
                 
                 {feature.subtitle && (
@@ -101,7 +114,7 @@ const Features = () => {
                 )}
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm flex-1">
+                <p className="text-muted-foreground text-sm flex-1 ">
                   {feature.description}
                 </p>
 

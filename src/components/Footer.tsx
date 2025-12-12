@@ -4,18 +4,18 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/ossdaiict", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/company/gdg-daiict", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com/gdg.daiict", label: "Instagram" },
-  { icon: Twitter, href: "https://twitter.com/gdg_daiict", label: "Twitter" },
+  { icon: Github, href: "hhttps://github.com/ossdaiict", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/gdg-on-campus-daiict/", label: "LinkedIn" },
+  { icon: Instagram, href: "https://www.instagram.com/gdg.daiict/", label: "Instagram" },
+  { icon: Twitter, href: "https://x.com/gdgdaiict", label: "Twitter" },
 ];
 
 const footerLinks = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
   { name: "Team", href: "/team" },
-  { name: "SLoP", href: "/slop" },
-  { name: "Contact", href: "/contact" },
+  // { name: "SLoP", href: "/slop" },
+  // { name: "Contact", href: "/contact" },
 ];
 
 const Footer = () => {
@@ -46,19 +46,16 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex gap-1">
-                <div className="w-4 h-4 bg-gdg-blue" />
-                <div className="w-4 h-4 bg-gdg-red" />
-                <div className="w-4 h-4 bg-gdg-yellow" />
-                <div className="w-4 h-4 bg-gdg-green" />
+              <div className="flex items-center">
+                <img src="/logo.png" alt="DSC DAU logo" className="w-8 h-8 object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-2xl tracking-tight leading-none">DSC DA-IICT</span>
-                <span className="font-mono text-xs text-background/60 leading-none">Previously GDG on Campus DA-IICT</span>
+                <span className="font-bold text-2xl tracking-tight leading-none">DSC DAU</span>
+                <span className="font-mono text-xs text-background/60 leading-none">Formerly GDG on Campus DAU</span>
               </div>
             </div>
             <p className="text-background/70 mb-6 font-mono text-sm">
-              Developer Student Clubs at DA-IICT is a student-run community fostering tech skills and innovation.
+              Developer Student Clubs at DAU is a student-run community fostering tech skills and innovation.
             </p>
             <div className="flex items-center gap-2 text-sm text-background/60">
               <MapPin className="w-4 h-4" />
@@ -103,11 +100,11 @@ const Footer = () => {
               Connect With Us
             </h3>
             <a
-              href="mailto:gdg@daiict.ac.in"
+              href="mailto:dsc@dau.ac.in"
               className="flex items-center gap-2 text-background/70 hover:text-background transition-colors mb-6 font-mono text-sm"
             >
               <Mail className="w-4 h-4" />
-              gdg@daiict.ac.in
+              dsc@dau.ac.in
             </a>
 
             {/* Social Icons - Chunky style */}
@@ -146,7 +143,7 @@ const Footer = () => {
           className="flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <p className="flex items-center gap-2 text-sm text-background/60 font-mono">
-            Made with <Heart className="w-4 h-4 text-gdg-red fill-gdg-red" /> by DSC DA-IICT Team
+            Made with <Heart className="w-4 h-4 text-gdg-red fill-gdg-red" /> by DSC DAU Team
           </p>
 
           <div className="flex items-center gap-4">
@@ -160,7 +157,7 @@ const Footer = () => {
             <span className="text-background/20">|</span>
 
             {/* Theme Toggle Easter Egg */}
-            <button
+            {/* <button
               onClick={toggleTheme}
               className="p-2 border border-background/30 hover:border-background hover:bg-background hover:text-foreground transition-all group"
               aria-label="Toggle theme"
@@ -170,7 +167,7 @@ const Footer = () => {
               ) : (
                 <Moon className="w-4 h-4" />
               )}
-            </button>
+            </button> */}
           </div>
         </motion.div>
 
@@ -183,7 +180,7 @@ const Footer = () => {
           className="mt-12 text-center overflow-hidden"
         >
           <span className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter whitespace-nowrap">
-            DSC DA-IICT
+            DSC DAU
           </span>
         </motion.div>
       </div>

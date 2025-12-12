@@ -173,13 +173,8 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <div className="inline-flex items-center gap-2 border-2 border-foreground px-4 py-2 paper-shadow-sm bg-background">
-            <div className="flex gap-1">
-              <div className="w-2 h-2 bg-gdg-blue" />
-              <div className="w-2 h-2 bg-gdg-red" />
-              <div className="w-2 h-2 bg-gdg-yellow" />
-              <div className="w-2 h-2 bg-gdg-green" />
-            </div>
+          <div className="inline-flex items-center gap-3 border-2 border-foreground px-4 py-2 paper-shadow-sm bg-background">
+            <img src="/logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" />
             <span className="font-mono text-xs uppercase tracking-wider">
               Developer Student Clubs
             </span>
@@ -203,9 +198,9 @@ const Hero = () => {
             className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.85]"
           >
             <span className="text-gdg-blue">DSC</span>{" "}
-            <span className="text-gdg-red">DA</span>
-            <span className="text-gdg-yellow">-</span>
-            <span className="text-gdg-green">IICT</span>
+            <span className="text-gdg-red">DAU</span>
+            {/* <span className="text-gdg-yellow">DAU</span> */}
+            {/* <span className="text-gdg-green">DAU</span> */}
           </motion.h1>
         </div>
 
@@ -214,10 +209,10 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 font-mono h-14"
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 font-mono h-auto md:h-14"
         >
           <TypewriterText
-            text="A Google Developers program for university students to learn, grow, and build together."
+            text="A Developer Student Club for university students to learn, grow, and build together."
             delay={1.2}
           />
         </motion.p>
@@ -269,7 +264,7 @@ const Hero = () => {
         >
           <div className="h-[1px] w-16 bg-border" />
           <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
-            Dhirubhai Ambani Institute of ICT, Gandhinagar
+            Dhirubhai Ambani University, Gandhinagar
           </span>
         </motion.div>
       </div>

@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Technologies from "@/components/Technologies";
 import Footer from "@/components/Footer";
+import Slop from "./Slop";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <main>
         <Hero />
         <Marquee />
+        <Slop />
         <Technologies />
 
         {/* Terminal Command Bridge Separator */}
