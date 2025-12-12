@@ -54,7 +54,7 @@ const Navbar = () => {
             href="#contact"
             className="hidden md:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 font-bold text-xs uppercase tracking-wider hover:bg-gdg-blue transition-colors relative group overflow-hidden"
           >
-            <span className="relative z-10"></span>
+            <span className="relative z-10">Join</span>
             <span className="absolute inset-0 bg-gdg-red translate-x-0 opacity-0 group-hover:opacity-100 group-hover:animate-glitch-1 z-0" />
             <span className="absolute inset-0 bg-gdg-blue -translate-x-0 opacity-0 group-hover:opacity-100 group-hover:animate-glitch-2 z-0" />
           </a>
