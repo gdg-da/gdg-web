@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Graph paper background */
+    --background: 45 20% 97%;
+    --foreground: 220 20% 10%;
+
+    --card: 45 20% 97%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 45 20% 97%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 220 20% 10%;
+    --primary-foreground: 45 20% 97%;
+
+    --secondary: 45 15% 92%;
+    --secondary-foreground: 220 20% 10%;
+
+    --muted: 45 15% 92%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 45 15% 92%;
+    --accent-foreground: 220 20% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 20% 97%;
+
+    --border: 220 10% 80%;
+    --input: 220 10% 80%;
+    --ring: 220 20% 10%;
+
+    --radius: 0px;
+
+    /* GDG Brand Colors - Desaturated for paper look */
+    --gdg-red: 4 65% 55%;
+    --gdg-blue: 217 70% 50%;
+    --gdg-green: 142 55% 42%;
+    --gdg-yellow: 45 85% 55%;
+
+    /* Graph paper grid */
+    --grid-color: 220 15% 85%;
+    
+    /* Paper shadow */
+    --shadow-color: 220 20% 10%;
+  }
+
+  .dark {
+    --background: 222 84% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 84% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 84% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 213 27% 84%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: none;
+  }
+
+  /* Graph paper background */
+  .graph-paper {
+    background-image: 
+      linear-gradient(hsl(var(--grid-color)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--grid-color)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Paper shadow effect */
+  .paper-shadow {
+    box-shadow: 4px 4px 0px hsl(var(--shadow-color));
+  }
+
+  .paper-shadow-sm {
+    box-shadow: 2px 2px 0px hsl(var(--shadow-color));
+  }
+
+  .paper-shadow-lg {
+    box-shadow: 6px 6px 0px hsl(var(--shadow-color));
+  }
+}
+
+@layer components {
+  /* Dimension marker styles */
+  .dimension-marker {
+    @apply font-mono text-xs text-muted-foreground;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Scribble underline animation */
+  .scribble-underline {
+    position: relative;
+  }
+
+  .scribble-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: hsl(var(--gdg-blue));
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .scribble-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Trading card tilt effect */
+  .trading-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+  }
+
+  .trading-card:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 8px 8px 0px hsl(var(--shadow-color));
+  }
+
+  /* GDG color utilities */
+  .bg-gdg-red { background-color: hsl(var(--gdg-red)); }
+  .bg-gdg-blue { background-color: hsl(var(--gdg-blue)); }
+  .bg-gdg-green { background-color: hsl(var(--gdg-green)); }
+  .bg-gdg-yellow { background-color: hsl(var(--gdg-yellow)); }
+
+  .text-gdg-red { color: hsl(var(--gdg-red)); }
+  .text-gdg-blue { color: hsl(var(--gdg-blue)); }
+  .text-gdg-green { color: hsl(var(--gdg-green)); }
+  .text-gdg-yellow { color: hsl(var(--gdg-yellow)); }
+
+  .border-gdg-red { border-color: hsl(var(--gdg-red)); }
+  .border-gdg-blue { border-color: hsl(var(--gdg-blue)); }
+  .border-gdg-green { border-color: hsl(var(--gdg-green)); }
+  .border-gdg-yellow { border-color: hsl(var(--gdg-yellow)); }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--secondary));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border: 1px solid hsl(var(--foreground));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Glitch animation for button */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 90% 0); transform: translate(-2px, 2px); }
+  50% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(90% 0 0 0); transform: translate(2px, -2px); }
+  50% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, 2px); }
+}
+
+.animate-glitch-1 { animation: glitch-1 0.3s ease-in-out infinite; }
+.animate-glitch-2 { animation: glitch-2 0.3s ease-in-out infinite; }
+
+/* Card flip styles */
+.perspective-1000 { perspective: 1000px; }
+.transform-style-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
