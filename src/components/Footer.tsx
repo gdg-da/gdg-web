@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Instagram, Twitter, Mail, MapPin, Heart, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/ossdaiict", label: "GitHub" },
@@ -10,11 +11,11 @@ const socialLinks = [
 ];
 
 const footerLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Events", href: "#events" },
-  { name: "Team", href: "#team" },
-  { name: "SLoP", href: "#slop" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "Events", href: "/events" },
+  { name: "Team", href: "/team" },
+  { name: "SLoP", href: "/slop" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const Footer = () => {
@@ -79,12 +80,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="font-mono text-sm text-background/70 hover:text-background hover:translate-x-2 inline-block transition-all"
                   >
                     → {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

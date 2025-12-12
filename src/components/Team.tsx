@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const teamMembers = [
   {
@@ -244,13 +245,13 @@ const Team = () => {
           <p className="text-muted-foreground mb-6 font-mono">
             Want to be part of the team?
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-flex items-center gap-2 bg-gdg-green text-primary-foreground px-8 py-4 font-bold uppercase tracking-wider text-sm paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all border-2 border-foreground"
           >
             Apply Now
             <span className="dimension-marker text-primary-foreground/70">→</span>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

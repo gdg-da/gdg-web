@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowRight, ExternalLink, Smartphone, Cloud, Brain, Code2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const FloatingElement = ({
   children,
@@ -234,13 +235,13 @@ const Hero = () => {
               <span>←</span>
               <span>cta</span>
             </div>
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="group inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 font-bold uppercase tracking-wider text-sm paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
             >
               Join Community
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
 
           <div className="relative">

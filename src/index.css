@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* Graph paper background */
-    --background: 45 20% 97%;
+    --background: 220 10% 95%;
     --foreground: 220 20% 10%;
 
     --card: 45 20% 97%;
@@ -79,7 +79,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans graph-paper;
     font-family: 'Space Grotesk', sans-serif;
     cursor: none;
   }

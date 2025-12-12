@@ -2,10 +2,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
-import Features from "@/components/Features";
 import Technologies from "@/components/Technologies";
-import Timeline from "@/components/Timeline";
-import Team from "@/components/Team";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -16,7 +13,6 @@ const Index = () => {
       <main>
         <Hero />
         <Marquee />
-        <Features />
         <Technologies />
 
         {/* Terminal Command Bridge Separator */}
@@ -42,9 +38,6 @@ const Index = () => {
             <div className="absolute -bottom-20 left-1/2 w-[2px] h-20 bg-gradient-to-b from-foreground/20 to-transparent -translate-x-1/2" />
           </div>
         </div>
-
-        <Timeline />
-        <Team />
       </main>
       <Footer />
     </div>
