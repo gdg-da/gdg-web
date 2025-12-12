@@ -176,7 +176,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-3 border-2 border-foreground px-4 py-2 paper-shadow-sm bg-background">
             <img src="/logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" />
             <span className="font-mono text-xs uppercase tracking-wider">
-              Developer Student Clubs
+              Developer Student Club
             </span>
           </div>
         </motion.div>

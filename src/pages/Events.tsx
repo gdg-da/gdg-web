@@ -8,7 +8,7 @@ const Events = () => {
     <div className="min-h-screen bg-background">
       <CustomCursor />
       <Navbar />
-      <main className="pt-20">
+      <main >
         <Timeline />
       </main>
       <Footer />
