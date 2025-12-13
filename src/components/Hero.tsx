@@ -1,281 +1,333 @@
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ArrowRight, ExternalLink, Smartphone, Cloud, Brain, Code2 } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { ArrowRight, Smartphone, Cloud, Brain, Code2, Terminal } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useGSAP, gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
-const FloatingElement = ({
-  children,
-  delay = 0,
-  className = ""
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.8, ease: "easeOut" }}
-    className={`absolute ${className}`}
-  >
-    {children}
-  </motion.div>
-);
-
-const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
-  const [displayedText, setDisplayedText] = useState("");
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index <= text.length) {
-          setDisplayedText(text.slice(0, index));
-          index++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 50);
-      return () => clearInterval(interval);
-    }, delay * 1000);
-    return () => clearTimeout(timeout);
-  }, [text, delay]);
-
-  return (
-    <span>
-      {displayedText}
-      <span className="animate-pulse">|</span>
-    </span>
-  );
-};
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const welcomeRef = useRef<HTMLHeadingElement>(null);
+  const dscRef = useRef<HTMLSpanElement>(null);
+  const dauRef = useRef<HTMLSpanElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const floatingIconsRef = useRef<HTMLDivElement>(null);
 
-  const parallaxX = useTransform(mouseX, [0, 1], [-30, 30]);
-  const parallaxY = useTransform(mouseY, [0, 1], [-30, 30]);
-  const parallaxX2 = useTransform(mouseX, [0, 1], [-20, 20]);
-  const parallaxY2 = useTransform(mouseY, [0, 1], [-20, 20]);
+  useGSAP(() => {
+    // Check for reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) {
+      // Simple fade in for reduced motion
+      gsap.set([welcomeRef.current, dscRef.current, dauRef.current, subtitleRef.current, ctaRef.current, badgeRef.current], {
+        opacity: 1,
+        y: 0,
+        x: 0,
+      });
+      return;
+    }
 
-  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    // Badge entrance
+    tl.fromTo(
+      badgeRef.current,
+      { opacity: 0, y: 30, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6 }
+    );
+
+    // "WELCOME TO" text reveal with clip-path
+    tl.fromTo(
+      welcomeRef.current,
+      { 
+        opacity: 0, 
+        clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)",
+        x: -30
+      },
+      { 
+        opacity: 1, 
+        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+        x: 0,
+        duration: 0.8
+      },
+      "-=0.2"
+    );
+
+    // "DSC" with character stagger effect
+    tl.fromTo(
+      dscRef.current,
+      { 
+        opacity: 0, 
+        y: 80,
+        rotateX: -45,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0,
+        rotateX: 0,
+        duration: 0.9,
+        ease: "power3.out"
+      },
+      "-=0.4"
+    );
+
+    // "DAU" with slight delay
+    tl.fromTo(
+      dauRef.current,
+      { 
+        opacity: 0, 
+        y: 80,
+        rotateX: -45,
+        transformOrigin: "bottom center"
+      },
+      { 
+        opacity: 1, 
+        y: 0,
+        rotateX: 0,
+        duration: 0.9,
+        ease: "power3.out"
+      },
+      "-=0.7"
+    );
+
+    // Subtitle typing effect simulation
+    tl.fromTo(
+      subtitleRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6 },
+      "-=0.3"
+    );
+
+    // CTA buttons
+    tl.fromTo(
+      ctaRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.5 },
+      "-=0.2"
+    );
+
+    // Floating icons staggered entrance
+    const icons = floatingIconsRef.current?.querySelectorAll('.floating-icon');
+    if (icons) {
+      tl.fromTo(
+        icons,
+        { opacity: 0, scale: 0, rotation: -15 },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          rotation: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "back.out(1.7)"
+        },
+        "-=0.4"
+      );
+    }
+
+    // Continuous floating animation for icons
+    icons?.forEach((icon, i) => {
+      gsap.to(icon, {
+        y: i % 2 === 0 ? -12 : 12,
+        duration: 2.5 + i * 0.3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: i * 0.2
+      });
+    });
+
+    // Parallax effect on mouse move
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
-      mouseX.set(clientX / innerWidth);
-      mouseY.set(clientY / innerHeight);
+      const x = (clientX / innerWidth - 0.5) * 30;
+      const y = (clientY / innerHeight - 0.5) * 30;
+
+      gsap.to(floatingIconsRef.current?.querySelectorAll('.parallax-layer-1') || [], {
+        x: x * 0.5,
+        y: y * 0.5,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+
+      gsap.to(floatingIconsRef.current?.querySelectorAll('.parallax-layer-2') || [], {
+        x: x * 0.3,
+        y: y * 0.3,
+        duration: 0.8,
+        ease: "power2.out"
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   return (
-    <section id="home" className="relative min-h-screen pt-24 pb-16 px-4 overflow-hidden graph-paper">
+    <section 
+      ref={heroRef}
+      id="home" 
+      className="relative min-h-screen pt-24 pb-16 px-4 overflow-hidden"
+    >
+      {/* Gradient background instead of grid everywhere */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+      
+      {/* Subtle grid overlay - only on part of the screen */}
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 100%)'
+        }}
+      />
+
+      {/* Accent gradient blobs */}
+      <div className="absolute top-20 right-[10%] w-[500px] h-[500px] rounded-full bg-gdg-blue/5 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-20 left-[10%] w-[400px] h-[400px] rounded-full bg-gdg-green/5 blur-[100px] pointer-events-none" />
+
       {/* Vertical side text */}
       <div className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 -rotate-90 origin-left">
-        <span className="font-mono text-xs tracking-[0.5em] text-muted-foreground uppercase">
-          Think • Build • Disrupt
+        <span className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/50 uppercase">
+          Build • Learn • Grow
         </span>
       </div>
 
-      {/* Dimension markers */}
-      <FloatingElement delay={0.8} className="top-32 right-8 hidden md:block">
-        <div className="dimension-marker flex items-center gap-2">
-          <div className="w-12 h-[1px] bg-muted-foreground" />
-          <span>100px</span>
-        </div>
-      </FloatingElement>
-
-      <FloatingElement delay={1} className="bottom-32 left-12 hidden md:block">
-        <div className="dimension-marker flex flex-col items-center gap-2">
-          <div className="h-16 w-[1px] bg-muted-foreground" />
-          <span>20cm</span>
-        </div>
-      </FloatingElement>
-
       {/* Floating tech icons with parallax */}
-      <motion.div
-        style={{ x: parallaxX, y: parallaxY }}
-        className="absolute top-40 right-[15%] hidden lg:block"
-      >
-        <motion.div
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="w-20 h-20 border-2 border-gdg-green bg-gdg-green/10 paper-shadow-sm flex items-center justify-center"
-        >
-          <Smartphone className="w-8 h-8 text-gdg-green" />
-        </motion.div>
-      </motion.div>
+      <div ref={floatingIconsRef} className="absolute inset-0 pointer-events-none">
+        <div className="floating-icon parallax-layer-1 absolute top-40 right-[15%] hidden lg:flex">
+          <div className="w-16 h-16 border border-gdg-green/30 bg-gdg-green/5 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-lg shadow-gdg-green/10">
+            <Smartphone className="w-7 h-7 text-gdg-green" />
+          </div>
+        </div>
 
-      <motion.div
-        style={{ x: parallaxX2, y: parallaxY2 }}
-        className="absolute bottom-40 right-[20%] hidden lg:block"
-      >
-        <motion.div
-          animate={{ y: [0, 12, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="w-16 h-16 border-2 border-gdg-blue bg-gdg-blue/10 paper-shadow-sm flex items-center justify-center rotate-12"
-        >
-          <Cloud className="w-6 h-6 text-gdg-blue" />
-        </motion.div>
-      </motion.div>
+        <div className="floating-icon parallax-layer-2 absolute bottom-40 right-[20%] hidden lg:flex">
+          <div className="w-14 h-14 border border-gdg-blue/30 bg-gdg-blue/5 backdrop-blur-sm rounded-lg flex items-center justify-center rotate-12 shadow-lg shadow-gdg-blue/10">
+            <Cloud className="w-6 h-6 text-gdg-blue" />
+          </div>
+        </div>
 
-      <motion.div
-        style={{ x: parallaxX, y: parallaxY2 }}
-        className="absolute top-60 left-[10%] hidden lg:block"
-      >
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="w-14 h-14 border-2 border-gdg-red bg-gdg-red/10 paper-shadow-sm flex items-center justify-center"
-        >
+        <div className="floating-icon parallax-layer-1 absolute top-60 left-[10%] hidden lg:flex">
+          <div className="w-14 h-14 border border-gdg-red/30 bg-gdg-red/5 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-lg shadow-gdg-red/10">
           <Brain className="w-6 h-6 text-gdg-red" />
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
 
-      <motion.div
-        style={{ x: parallaxX2, y: parallaxY }}
-        className="absolute bottom-60 left-[18%] hidden lg:block"
-      >
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="w-12 h-12 border-2 border-gdg-yellow bg-gdg-yellow/10 paper-shadow-sm flex items-center justify-center"
-        >
+        <div className="floating-icon parallax-layer-2 absolute bottom-60 left-[18%] hidden lg:flex">
+          <div className="w-12 h-12 border border-gdg-yellow/30 bg-gdg-yellow/5 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-lg shadow-gdg-yellow/10">
           <Code2 className="w-5 h-5 text-gdg-yellow" />
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
 
-      {/* Paper cutout cloud */}
-      <motion.div
-        style={{ x: parallaxX, y: parallaxY }}
-        className="absolute top-32 left-[22%] hidden lg:block"
-      >
-        <motion.svg
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          width="80"
-          height="50"
-          viewBox="0 0 80 50"
-          className="fill-secondary stroke-foreground stroke-2"
-        >
-          <path d="M20 35 Q5 35 5 25 Q5 15 20 15 Q20 5 35 5 Q50 5 50 15 Q65 10 70 20 Q80 25 70 35 Z" />
-        </motion.svg>
-      </motion.div>
+        <div className="floating-icon parallax-layer-1 absolute top-32 left-[25%] hidden lg:flex">
+          <div className="w-12 h-12 border border-foreground/10 bg-foreground/5 backdrop-blur-sm rounded-lg flex items-center justify-center shadow-lg">
+            <Terminal className="w-5 h-5 text-foreground/40" />
+          </div>
+        </div>
+      </div>
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto pt-20 md:pt-32">
+      <div ref={containerRef} className="relative max-w-6xl mx-auto pt-20 md:pt-32">
         {/* GDG Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <div className="inline-flex items-center gap-3 border-2 border-foreground px-4 py-2 paper-shadow-sm bg-background">
-            <img src="/logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" />
-            <span className="font-mono text-xs uppercase tracking-wider">
-              Developer Student Club
+        <div ref={badgeRef} className="mb-8 opacity-0">
+          <div className="inline-flex items-center gap-3 border border-border/50 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm">
+            <img src="/logo.png" alt="DSC DAU logo" className="w-5 h-5 object-contain" />
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Google Developer Student Club
             </span>
+            <span className="w-2 h-2 rounded-full bg-gdg-green animate-pulse" />
           </div>
-        </motion.div>
-
-        {/* Main Heading - Stacked */}
-        <div className="space-y-2 md:space-y-4 mb-8">
-          <motion.h1
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] text-muted-foreground"
-          >
-            WELCOME TO
-          </motion.h1>
-          <motion.h1
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.35, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.85]"
-          >
-            <span className="text-gdg-blue">DSC</span>{" "}
-            <span className="text-gdg-red">DAU</span>
-            {/* <span className="text-gdg-yellow">DAU</span> */}
-            {/* <span className="text-gdg-green">DAU</span> */}
-          </motion.h1>
         </div>
 
-        {/* Typewriter Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 font-mono h-auto md:h-14"
+        {/* Main Heading - Stacked */}
+        <div className="space-y-2 md:space-y-3 mb-10">
+          <h1
+            ref={welcomeRef}
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] text-muted-foreground/70 opacity-0"
+          >
+            WELCOME TO
+          </h1>
+          <div className="flex flex-wrap items-baseline gap-x-4 md:gap-x-6">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-bold tracking-tighter leading-[0.85]">
+              <span 
+                ref={dscRef} 
+                className="inline-block text-gdg-blue opacity-0"
+                style={{ perspective: '1000px' }}
+              >
+                DSC
+              </span>{" "}
+              <span 
+                ref={dauRef} 
+                className="inline-block text-gdg-red opacity-0"
+                style={{ perspective: '1000px' }}
+              >
+                DAU
+              </span>
+            </h1>
+          </div>
+        </div>
+
+        {/* Subtitle */}
+        <p
+          ref={subtitleRef}
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed opacity-0"
         >
-          <TypewriterText
-            text="A Developer Student Club for university students to learn, grow, and build together."
-            delay={1.2}
-          />
-        </motion.p>
+          A community of{" "}
+          <span className="text-foreground font-medium">passionate developers</span>{" "}
+          learning, growing, and building together. Powered by{" "}
+          <span className="font-mono text-gdg-blue">Google Developers</span>.
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
-          className="flex flex-wrap gap-4 items-center"
-        >
-          <div className="relative">
-            {/* Dimension arrow pointing to button */}
-            <div className="hidden md:flex absolute -left-20 top-1/2 -translate-y-1/2 items-center gap-1 dimension-marker">
-              <span>←</span>
-              <span>cta</span>
-            </div>
+        <div ref={ctaRef} className="flex flex-wrap gap-4 items-center opacity-0">
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 font-bold uppercase tracking-wider text-sm paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+            className="group inline-flex items-center gap-3 bg-foreground text-background px-7 py-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-foreground/10"
             >
               Join Community
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </div>
 
-          <div className="relative">
-            {/* <a
+          <a
               href="#slop"
-              className="group inline-flex items-center gap-2 border-2 border-foreground bg-background px-8 py-4 font-bold uppercase tracking-wider text-sm paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
-            >
-              <ExternalLink className="w-4 h-4" />
-              View Projects
-            </a> */}
-            {/* Dimension marker */}
-            <div className="hidden md:flex absolute -right-16 top-1/2 -translate-y-1/2 items-center gap-1 dimension-marker">
-              <span>200px</span>
-              <span>→</span>
-            </div>
+            className="group inline-flex items-center gap-3 border border-border bg-background/50 backdrop-blur-sm px-7 py-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:bg-secondary hover:border-foreground/20"
+          >
+            <span className="font-mono text-muted-foreground">&lt;</span>
+            Explore Projects
+            <span className="font-mono text-muted-foreground">/&gt;</span>
+          </a>
           </div>
-        </motion.div>
 
-        {/* DA-IICT marker */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 0.6 }}
-          className="mt-16 flex items-center gap-4"
-        >
-          <div className="h-[1px] w-16 bg-border" />
-          <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
-            Dhirubhai Ambani University, Gandhinagar
-          </span>
-        </motion.div>
-      </div>
-
-      {/* Bottom grid coordinates */}
-      <div className="absolute bottom-8 right-8 hidden md:block">
-        <div className="dimension-marker">
-          <span className="text-muted-foreground">
-            23.0°N, 72.5°E
+        {/* University marker - more subtle */}
+        <div className="mt-20 flex items-center gap-4">
+          <div className="h-px w-12 bg-gradient-to-r from-transparent to-border" />
+          <span className="font-mono text-xs text-muted-foreground/60 tracking-wide">
+            Dhirubhai Ambani University • Gandhinagar, India
           </span>
         </div>
+      </div>
+
+      {/* Bottom code decoration */}
+      <div className="absolute bottom-8 right-8 hidden md:block">
+        <div className="font-mono text-[10px] text-muted-foreground/40 text-right space-y-1">
+          <div><span className="text-gdg-blue/50">const</span> location = <span className="text-gdg-green/50">"23.0°N, 72.5°E"</span>;</div>
+          <div><span className="text-gdg-blue/50">const</span> status = <span className="text-gdg-yellow/50">"building"</span>;</div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+        <span className="font-mono text-[10px] text-muted-foreground tracking-widest">SCROLL</span>
+        <div className="w-px h-8 bg-gradient-to-b from-foreground/50 to-transparent animate-pulse" />
       </div>
     </section>
   );
