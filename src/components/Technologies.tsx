@@ -1,119 +1,211 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useGSAP, gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
-import { FaReact, FaAndroid, FaPython, FaNodeJs, FaDocker } from "react-icons/fa";
-import { SiFlutter, SiFirebase, SiTensorflow, SiGooglecloud, SiKubernetes, SiTypescript, SiGo, SiWeb3Dotjs } from "react-icons/si";
+import { FaReact, FaAndroid, FaPython, FaNodeJs } from "react-icons/fa";
+import { SiFlutter, SiFirebase, SiPytorch, SiGooglecloud, SiKubernetes, SiTypescript, SiGo, SiNextdotjs, SiExpress, SiDocker, SiVercel } from "react-icons/si";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const technologies = [
-  { name: "React", icon: <FaReact />, color: "gdg-blue" },
-  { name: "Android", icon: <FaAndroid />, color: "gdg-green" },
-  { name: "Flutter", icon: <SiFlutter />, color: "gdg-blue" },
-  { name: "Firebase", icon: <SiFirebase />, color: "gdg-yellow" },
-  { name: "TensorFlow", icon: <SiTensorflow />, color: "gdg-red" },
-  { name: "Google Cloud", icon: <SiGooglecloud />, color: "gdg-blue" },
-  { name: "Kubernetes", icon: <SiKubernetes />, color: "gdg-blue" },
-  { name: "Python", icon: <FaPython />, color: "gdg-yellow" },
-  { name: "Node.js", icon: <FaNodeJs />, color: "gdg-green" },
-  { name: "TypeScript", icon: <SiTypescript />, color: "gdg-blue" },
-  { name: "Go", icon: <SiGo />, color: "gdg-blue" },
-  { name: "Web3", icon: <SiWeb3Dotjs />, color: "gdg-green" },
+  // Web Development
+  { name: "React", icon: <FaReact />, color: "gdg-blue", category: "Web" },
+  { name: "Next.js", icon: <SiNextdotjs />, color: "foreground", category: "Web" },
+  { name: "TypeScript", icon: <SiTypescript />, color: "gdg-blue", category: "Web" },
+  
+  // Mobile Development
+  { name: "Flutter", icon: <SiFlutter />, color: "gdg-blue", category: "Mobile" },
+  { name: "Android", icon: <FaAndroid />, color: "gdg-green", category: "Mobile" },
+  
+  // Backend & APIs
+  { name: "Node.js", icon: <FaNodeJs />, color: "gdg-green", category: "Backend" },
+  { name: "Express.js", icon: <SiExpress />, color: "gdg-green", category: "Backend" },
+  { name: "Go", icon: <SiGo />, color: "gdg-blue", category: "Backend" },
+  { name: "Firebase", icon: <SiFirebase />, color: "gdg-yellow", category: "Backend" },
+  
+  // Cloud & DevOps
+  { name: "Google Cloud", icon: <SiGooglecloud />, color: "gdg-red", category: "Cloud" },
+  { name: "Vercel", icon: <SiVercel />, color: "gdg-blue", category: "Cloud" },
+  { name: "Docker", icon: <SiDocker />, color: "gdg-yellow", category: "Cloud" },
+  { name: "Kubernetes", icon: <SiKubernetes />, color: "gdg-blue", category: "DevOps" },
+  
+  // AI & Data
+  { name: "PyTorch", icon: <SiPytorch />, color: "gdg-yellow", category: "AI/ML" },
+  { name: "Python", icon: <FaPython />, color: "gdg-green", category: "AI/ML" },
 ];
 
 const Technologies = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) return;
+
+    // Header animation
+    gsap.from(headerRef.current, {
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+    // Staggered grid animation with wave effect
+    const cards = gridRef.current?.querySelectorAll('.tech-card');
+    if (cards) {
+      gsap.from(cards, {
+        opacity: 0,
+        y: 60,
+        scale: 0.9,
+        duration: 0.6,
+        stagger: {
+          each: 0.08,
+          from: "start",
+          grid: "auto",
+          ease: "power2.out"
+        },
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Add hover animation to each card
+      cards.forEach((card) => {
+        const icon = card.querySelector('.tech-icon');
+        
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            y: -8,
+            scale: 1.02,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+          gsap.to(icon, {
+            scale: 1.15,
+            rotation: 5,
+            duration: 0.3,
+            ease: "back.out(1.7)"
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+          gsap.to(icon, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+      });
+    }
+  }, []);
+
   return (
-    <section className="py-20 px-4 bg-secondary/30">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} className="py-24 px-4 relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 via-secondary/50 to-secondary/30" />
+      
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-[2px] w-12 bg-foreground" />
-            <span className="font-mono text-sm uppercase tracking-wider text-muted-foreground">
-              Our Stack
-            </span>
-            <div className="h-[2px] w-12 bg-foreground" />
+        <div ref={headerRef} className="section-header text-center">
+          <div className="section-label justify-center">
+            <div className="section-label-line" />
+            <span className="section-label-text">Our Stack</span>
+            <div className="section-label-line rotate-180" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-            Technologies We <span className="text-gdg-green">Work On</span>
+          <h2 className="section-title">
+            Technologies We{" "}
+            <span className="text-gdg-green">Build With</span>
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-            From mobile to cloud, we explore and build with cutting-edge technologies.
+          <p className="section-description mx-auto text-center">
+            From mobile to cloud, AI to web—we explore and master cutting-edge technologies 
+            that power modern applications.
           </p>
-        </motion.div>
+        </div>
 
         {/* Tech Grid */}
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {technologies.map((tech, index) => (
-            <motion.div
+        <div 
+          ref={gridRef}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+        >
+          {technologies.map((tech) => (
+            <div
               key={tech.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05, duration: 0.3 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8, scale: 1.05 }}
-              className="group"
+              className="tech-card group cursor-pointer"
             >
-              <div className="border-2 border-foreground bg-background p-4 paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex flex-col items-center text-center">
+              <div className="h-full p-5 rounded-xl border border-border bg-card hover:bg-card/80 transition-colors duration-300 flex flex-col items-center text-center relative overflow-hidden">
+                {/* Subtle gradient on hover */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: `radial-gradient(circle at 50% 0%, hsl(var(--${tech.color}) / 0.08) 0%, transparent 70%)`
+                  }}
+                />
+                
                 {/* Icon */}
                 <div
-                  className="text-3xl md:text-4xl mb-2 grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="tech-icon text-3xl md:text-4xl mb-3 relative z-10 transition-colors duration-300"
+                  style={{ color: `hsl(var(--${tech.color}))` }}
                 >
                   {tech.icon}
                 </div>
 
                 {/* Name */}
-                <p
-                  className="font-mono text-xs md:text-sm font-bold transition-colors"
-                  style={{ color: `hsl(var(--${tech.color}))` }}
-                >
+                <p className="font-semibold text-sm mb-1 relative z-10">
                   {tech.name}
                 </p>
 
-                {/* Dimension marker */}
-                <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="dimension-marker text-muted-foreground text-xs">
-                    #{String(index + 1).padStart(2, '0')}
-                  </span>
-                </div>
+                {/* Category tag */}
+                <span className="font-mono text-[10px] text-muted-foreground relative z-10">
+                  {tech.category}
+                </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Bottom decoration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-12 flex items-center justify-center gap-4"
-        >
-          <div className="h-[1px] w-24 bg-border relative">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute top-0 w-[1px] h-2 bg-border"
-                style={{ left: `${i * 25}%` }}
-              />
-            ))}
-          </div>
-          <span className="font-mono text-xs text-muted-foreground uppercase">
-            And many more...
-          </span>
-          <div className="h-[1px] w-24 bg-border relative">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute top-0 w-[1px] h-2 bg-border"
-                style={{ left: `${i * 25}%` }}
-              />
-            ))}
-          </div>
-        </motion.div>
+        {/* Bottom text */}
+        <div className="mt-12 text-center">
+          <p className="inline-flex items-center gap-3 font-mono text-xs text-muted-foreground">
+            <span className="w-12 h-px bg-gradient-to-r from-transparent to-border" />
+            <span>+ many more in our workshops</span>
+            <span className="w-12 h-px bg-gradient-to-l from-transparent to-border" />
+          </p>
+        </div>
+
+        {/* Code snippet decoration */}
+        <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
+          <pre className="font-mono text-[10px] leading-relaxed text-foreground">
+{`const stack = {
+  frontend: ["React", "Next.js"],
+  mobile: ["Flutter", "Android"],
+  backend: ["Node.js", "Go"],
+  cloud: ["GCP", "Firebase"],
+  ml: ["TensorFlow", "Python"]
+};
+
+export default stack;`}
+          </pre>
+        </div>
       </div>
     </section>
   );

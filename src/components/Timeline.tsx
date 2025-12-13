@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
-import { Calendar, Globe, Code, Cpu } from "lucide-react";
+import { useRef } from "react";
+import { useGSAP, gsap, ScrollTrigger } from "@/hooks/useGSAP";
+import { Calendar, Globe, Code, Cpu, ArrowRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const events = [
   {
@@ -9,7 +12,8 @@ const events = [
     description: "Semester Long Projects - Our flagship open source program aligned with Hacktoberfest. Mentor-guided contributions to real projects.",
     type: "Open Source",
     icon: Code,
-    color: "gdg-green"
+    color: "gdg-green",
+    status: "upcoming"
   },
   {
     id: 2,
@@ -18,106 +22,182 @@ const events = [
     description: "Introduction to the full curious world of development, with guiding from HTML to Web3 all at once.",
     type: "Tech Talk",
     icon: Cpu,
-    color: "gdg-yellow"
+    color: "gdg-yellow",
+    status: "completed"
   },
   {
     id: 3,
     title: "KDE (K Desktop Environment) Event",
     date: "April 2025",
     description: "3-day events of KDE with expert lead event on free and open source of KDE",
+    type: "Conference",
     icon: Globe,
-    color: "gdg-blue"
+    color: "gdg-blue",
+    status: "upcoming"
   },
   {
     id: 4,
     title: "Dev-O-Lution",
     date: "January 2025",
     description: "Dev-o-lution is a tech conference where code evolves and innovation thrives. It has everything from workshops, talks, and mind-expanding sessions that will revolutionize your dev skills!",
-    type: "Workshop",
+    type: "Conference",
     icon: Calendar,
-    color: "gdg-red"
+    color: "gdg-red",
+    status: "upcoming"
   },
 ];
 
 const Timeline = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) return;
+
+    // Header animation
+    gsap.from(headerRef.current, {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+    // Timeline line draw animation
+    gsap.from(lineRef.current, {
+      scaleY: 0,
+      transformOrigin: "top center",
+      duration: 1.5,
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: timelineRef.current,
+        start: "top 80%",
+        end: "bottom 20%",
+        scrub: 1
+      }
+    });
+
+    // Event cards animation
+    const cards = timelineRef.current?.querySelectorAll('.timeline-card');
+    cards?.forEach((card, index) => {
+      const direction = index % 2 === 0 ? -60 : 60;
+      
+      gsap.from(card, {
+        opacity: 0,
+        x: direction,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+
+    // Node markers animation
+    const nodes = timelineRef.current?.querySelectorAll('.timeline-node');
+    nodes?.forEach((node) => {
+      gsap.from(node, {
+        scale: 0,
+        duration: 0.5,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: node,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+  }, []);
+
   return (
-    <section id="events" className="py-20 px-4 bg-secondary/30">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} id="events" className="py-24 px-4 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 via-background to-secondary/30" />
+      
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-[2px] w-12 bg-foreground" />
-            <span className="font-mono text-sm uppercase tracking-wider text-muted-foreground">
-              What's Happening
-            </span>
-            <div className="h-[2px] w-12 bg-foreground" />
+        <div ref={headerRef} className="section-header text-center">
+          <div className="section-label justify-center">
+            <div className="section-label-line" />
+            <span className="section-label-text">What's Happening</span>
+            <div className="section-label-line rotate-180" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-            Recent <span className="text-gdg-red">Events</span>
+          <h2 className="section-title">
+            Recent{" "}
+            <span className="text-gdg-red">Events</span>
           </h2>
-        </motion.div>
+          <p className="section-description mx-auto text-center">
+            From workshops to hackathons, we host events that inspire learning 
+            and foster community connections.
+          </p>
+        </div>
 
         {/* Timeline */}
-        <div className="relative">
-          {/* Central line - styled as circuit trace */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-foreground transform md:-translate-x-1/2">
-            {/* Circuit trace decorations */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-foreground" />
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-foreground" />
-            {/* Dash marks along the line */}
-            {[...Array(8)].map((_, i) => (
-              <div 
-                key={i}
-                className="absolute left-1/2 -translate-x-1/2 w-4 h-[2px] bg-foreground"
-                style={{ top: `${(i + 1) * 12}%` }}
-              />
-            ))}
-          </div>
+        <div ref={timelineRef} className="relative mt-16">
+          {/* Central line */}
+          <div 
+            ref={lineRef}
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-border via-foreground/20 to-border md:-translate-x-1/2"
+          />
 
           {/* Events */}
-          <div className="space-y-12">
+          <div className="space-y-12 md:space-y-16">
             {events.map((event, index) => (
-              <motion.div
+              <div
                 key={event.id}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                viewport={{ once: true }}
-                className={`relative flex items-center ${
+                className={`timeline-card relative flex items-start ${
                   index % 2 === 0 
                     ? "md:flex-row flex-row" 
                     : "md:flex-row-reverse flex-row"
                 }`}
               >
-                {/* Node number */}
-                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 z-10">
+                {/* Node marker */}
+                <div className="timeline-node absolute left-4 md:left-1/2 transform md:-translate-x-1/2 z-10">
                   <div 
-                    className="w-10 h-10 border-2 border-foreground bg-background flex items-center justify-center font-mono font-bold paper-shadow-sm"
-                    style={{ backgroundColor: `hsl(var(--${event.color}) / 0.2)` }}
+                    className="w-12 h-12 rounded-full border-2 border-background flex items-center justify-center shadow-lg"
+                    style={{ 
+                      backgroundColor: `hsl(var(--${event.color}))`,
+                    }}
                   >
-                    {String(event.id).padStart(2, '0')}
+                    <event.icon className="w-5 h-5 text-white" />
                   </div>
                 </div>
 
                 {/* Card */}
-                <div className={`ml-16 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}>
-                  <div className="border-2 border-foreground bg-background p-6 paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all group cursor-pointer">
+                <div className={`ml-20 md:ml-0 md:w-[calc(50%-48px)] ${index % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
+                  <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-border/80 hover:shadow-lg cursor-pointer relative overflow-hidden">
+                    {/* Status indicator */}
+                    {event.status === "upcoming" && (
+                      <div className="absolute top-4 right-4">
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-gdg-green/10 text-gdg-green text-[10px] font-mono uppercase">
+                          <span className="w-1.5 h-1.5 rounded-full bg-gdg-green animate-pulse" />
+                          Upcoming
+                        </span>
+                      </div>
+                    )}
+
                     {/* Event type badge */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3 mb-4">
                       <span 
-                        className="inline-flex items-center gap-2 px-3 py-1 border border-foreground font-mono text-xs uppercase"
-                        style={{ backgroundColor: `hsl(var(--${event.color}) / 0.1)` }}
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-md font-mono text-xs uppercase tracking-wide"
+                        style={{ 
+                          backgroundColor: `hsl(var(--${event.color}) / 0.1)`,
+                          color: `hsl(var(--${event.color}))`
+                        }}
                       >
-                        <event.icon className="w-3 h-3" />
                         {event.type}
                       </span>
-                      <span className="dimension-marker">{event.date.split(' ')[0]}</span>
                     </div>
 
                     {/* Title */}
@@ -126,51 +206,37 @@ const Timeline = () => {
                     </h3>
 
                     {/* Date */}
-                    <p className="font-mono text-sm text-muted-foreground mb-3">
-                      {event.date}
+                    <p className="font-mono text-sm text-muted-foreground mb-4">
+                      📅 {event.date}
                     </p>
 
                     {/* Description */}
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       {event.description}
                     </p>
 
-                    {/* Ruler decoration */}
-                    <div className="mt-4 pt-4 border-t border-border flex items-center gap-2">
-                      <div className="flex-1 h-[1px] bg-border relative">
-                        {[...Array(10)].map((_, i) => (
-                          <div 
-                            key={i} 
-                            className="absolute top-0 w-[1px] h-2 bg-border"
-                            style={{ left: `${i * 10}%` }}
-                          />
-                        ))}
-                      </div>
-                      <span className="dimension-marker text-muted-foreground group-hover:text-foreground transition-colors">→</span>
+                    {/* Learn more link */}
+                    <div className="mt-5 pt-4 border-t border-border">
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                        Learn more
+                        <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                      </span>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* View All Button */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 border-2 border-foreground bg-background px-8 py-4 font-bold uppercase tracking-wider text-sm paper-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
-          >
-            View All Events
-            <span className="dimension-marker text-muted-foreground">+more</span>
-          </a>
-        </motion.div> */}
+        {/* Bottom decoration */}
+        <div className="mt-20 text-center">
+          <div className="inline-flex items-center gap-4 font-mono text-xs text-muted-foreground">
+            <span className="w-12 h-px bg-gradient-to-r from-transparent to-border" />
+            <span>More events coming soon</span>
+            <span className="w-12 h-px bg-gradient-to-l from-transparent to-border" />
+          </div>
+        </div>
       </div>
     </section>
   );
