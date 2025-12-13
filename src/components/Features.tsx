@@ -30,7 +30,7 @@ const features = [
     icon: GitBranch,
     color: "gdg-green",
     span: "md:col-span-1 md:row-span-2",
-    stats: { contributors: "100+", repos: "25+" }
+    stats: { contributors: "100+", repos: "20+" }
   },
   {
     title: "Code Dementia",
@@ -39,7 +39,7 @@ const features = [
     icon: PenTool,
     color: "gdg-yellow",
     span: "md:col-span-1 md:row-span-1",
-    stats: { articles: "50+" }
+    stats: { articles: "20+" }
   }
 ];
 
@@ -127,9 +127,9 @@ const Features = () => {
                   style={{ background: `hsl(var(--${feature.color}))` }}
                 />
 
-                {/* Background gradient on hover */}
+                {/* Background gradient on hover (visual only; don't block pointer events) */}
                 <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
                     background: `radial-gradient(ellipse at top, hsl(var(--${feature.color}) / 0.05) 0%, transparent 50%)`
                   }}
@@ -176,6 +176,19 @@ const Features = () => {
                   {feature.description}
                 </p>
 
+                {feature.website && (
+                  <div className="mt-3">
+                    <a
+                      href={feature.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-gdg-blue hover:underline"
+                    >
+                      Learn more →
+                    </a>
+                  </div>
+                )}
+
                 {/* Stats */}
                 {feature.stats && (
                   <div className="mt-6 pt-5 border-t border-border flex flex-wrap gap-4">
@@ -198,7 +211,14 @@ const Features = () => {
                 {/* External link indicator */}
                 {feature.website && (
                   <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ExternalLink className="w-4 h-4 text-muted-foreground" />
+                    <a
+                      href={feature.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center p-1 z-10"
+                    >
+                      <ExternalLink className="w-4 h-4 text-muted-foreground" />
+                    </a>
                   </div>
                 )}
               </div>

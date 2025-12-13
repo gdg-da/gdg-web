@@ -147,16 +147,16 @@ const Index = () => {
   useEffect(() => {
     // Smooth scroll setup for anchor links
     const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.hash && target.hash.startsWith('#')) {
-        const element = document.querySelector(target.hash);
+      // Find the nearest anchor element in case inner elements are clicked
+      const target = (e.target as HTMLElement).closest('a') as HTMLAnchorElement | null;
+      if (target && target.hash && target.hash.startsWith('#')) {
+        const element = document.querySelector(target.hash) as HTMLElement | null;
         if (element) {
           e.preventDefault();
-          gsap.to(window, {
-            scrollTo: { y: element, offsetY: 80 },
-            duration: 1,
-            ease: "power3.inOut"
-          });
+          // Compute scroll position with an offset to account for the fixed navbar
+          const offsetY = 80; // px
+          const top = element.getBoundingClientRect().top + window.pageYOffset - offsetY;
+          window.scrollTo({ top, behavior: 'smooth' });
         }
       }
     };

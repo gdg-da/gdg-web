@@ -316,13 +316,13 @@ const Team = () => {
           <p className="text-muted-foreground mb-6 font-mono text-sm">
             Want to be part of the team?
           </p>
-          <Link
-            to="/contact"
+          <a
+            href="#contact"
             className="inline-flex items-center gap-2 bg-gdg-green text-white px-8 py-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-gdg-green/20"
           >
             Apply Now
             <span className="font-mono opacity-70">→</span>
-          </Link>
+          </a>
         </div>
       </div>
     </section>

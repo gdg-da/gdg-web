@@ -84,17 +84,17 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img 
+            {/* <img 
               src="/gdg-logo.png" 
               alt="DSC DAU logo" 
               className="w-8 h-8 object-contain group-hover:scale-105 transition-transform" 
-            />
+            /> */}
             <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight leading-none">
                 DSC DAU
               </span>
               <span className="font-mono text-[9px] text-muted-foreground leading-none hidden sm:block">
-                GDG on Campus DAU
+                Formerly GDG on Campus DAU
               </span>
             </div>
           </Link>
@@ -131,13 +131,13 @@ const Navbar = () => {
           </div>
 
           {/* Join Button - Desktop */}
-          <Link
+          {/* <Link
             to="/contact"
             className="hidden md:inline-flex items-center gap-2 bg-foreground text-background px-5 py-2 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
           >
             <span className="w-2 h-2 rounded-full bg-gdg-green animate-pulse" />
             Join
-          </Link>
+          </Link> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -186,14 +186,14 @@ const Navbar = () => {
                 </div>
               ))}
               <div className="mobile-nav-item mt-2">
-                <Link
-                  to="/contact"
+                <a
+                  href="#contact"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-center gap-2 bg-foreground text-background px-4 py-3 rounded-lg font-semibold text-sm"
                 >
                   <span className="w-2 h-2 rounded-full bg-gdg-green animate-pulse" />
                   Join Community
-                </Link>
+                </a>
               </div>
             </div>
           </div>

@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Team from "./pages/Team";
 import Slop from "./pages/Slop";
-import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

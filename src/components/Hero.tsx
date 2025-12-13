@@ -98,17 +98,7 @@ const Hero = () => {
         "-=0.3"
       );
 
-      // Continuous subtle hover animation on letters
-      letters.forEach((letter, i) => {
-        gsap.to(letter, {
-          y: -5,
-          duration: 2 + i * 0.2,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: i * 0.1
-        });
-      });
+      // Removed continuous 'dancing' animation: keep the initial entrance only
     }
 
     // Subtitle with word reveal
@@ -379,9 +369,9 @@ const Hero = () => {
         {/* GDG Badge */}
         <div ref={badgeRef} className="mb-8 opacity-0">
           <div className="inline-flex items-center gap-3 border border-border/30 px-5 py-2.5 rounded-full bg-background/60 backdrop-blur-xl shadow-lg">
-            <img src="/gdg-logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" />
+            {/* <img src="/gdg-logo.png" alt="DSC DAU logo" className="w-6 h-6 object-contain" /> */}
             <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              Google Developer Student Club
+              Developer Student Club
             </span>
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gdg-green opacity-75"></span>
@@ -437,13 +427,13 @@ const Hero = () => {
 
         {/* CTAs */}
         <div ref={ctaRef} className="flex flex-wrap gap-5 items-center">
-          <Link
-            to="/contact"
+          <a
+            href="#contact"
             className="cta-button group inline-flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-xl font-semibold text-sm shadow-2xl shadow-foreground/20 hover:shadow-foreground/30 transition-shadow"
           >
             Join Community
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          </a>
 
           <a
             href="#slop"
