@@ -18,19 +18,19 @@ const technologies = [
   
   // Backend & APIs
   { name: "Node.js", icon: <FaNodeJs />, color: "gdg-green", category: "Backend" },
-  { name: "Express.js", icon: <SiExpress />, color: "gdg-green", category: "Backend" },
+  { name: "Express.js", icon: <SiExpress />, color: "gdg-black", category: "Backend" },
   { name: "Go", icon: <SiGo />, color: "gdg-blue", category: "Backend" },
-  { name: "Firebase", icon: <SiFirebase />, color: "gdg-yellow", category: "Backend" },
+  { name: "Firebase", icon: <SiFirebase />, color: "gdg-orange", category: "Backend" },
   
   // Cloud & DevOps
-  { name: "Google Cloud", icon: <SiGooglecloud />, color: "gdg-red", category: "Cloud" },
-  { name: "Vercel", icon: <SiVercel />, color: "gdg-blue", category: "Cloud" },
-  { name: "Docker", icon: <SiDocker />, color: "gdg-yellow", category: "Cloud" },
+  { name: "Google Cloud", icon: <SiGooglecloud />, color: "gdg-blue", category: "Cloud" },
+  { name: "Vercel", icon: <SiVercel />, color: "gdg-black", category: "Cloud" },
+  { name: "Docker", icon: <SiDocker />, color: "gdg-blue", category: "Cloud" },
   { name: "Kubernetes", icon: <SiKubernetes />, color: "gdg-blue", category: "DevOps" },
   
   // AI & Data
-  { name: "PyTorch", icon: <SiPytorch />, color: "gdg-yellow", category: "AI/ML" },
-  { name: "Python", icon: <FaPython />, color: "gdg-green", category: "AI/ML" },
+  { name: "PyTorch", icon: <SiPytorch />, color: "gdg-red", category: "AI/ML" },
+  { name: "Python", icon: <FaPython />, color: "gdg-yellow", category: "AI/ML" },
 ];
 
 const Technologies = () => {
@@ -192,20 +192,6 @@ const Technologies = () => {
           </p>
         </div>
 
-        {/* Code snippet decoration */}
-        <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
-          <pre className="font-mono text-[10px] leading-relaxed text-foreground">
-{`const stack = {
-  frontend: ["React", "Next.js"],
-  mobile: ["Flutter", "Android"],
-  backend: ["Node.js", "Go"],
-  cloud: ["GCP", "Firebase"],
-  ml: ["TensorFlow", "Python"]
-};
-
-export default stack;`}
-          </pre>
-        </div>
       </div>
     </section>
   );

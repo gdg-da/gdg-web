@@ -86,7 +86,7 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="footer-animate lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <img src="/logo.png" alt="DSC DAU logo" className="w-10 h-10 object-contain" />
+              <img src="/gdg-logo.png" alt="DSC DAU logo" className="w-10 h-10 object-contain" />
               <div className="flex flex-col">
                 <span className="font-bold text-2xl tracking-tight leading-none">DSC DAU</span>
                 <span className="font-mono text-[10px] text-background/50 leading-none mt-1">
