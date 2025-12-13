@@ -27,14 +27,14 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // Entrance animation
-    gsap.from(navRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.2
-    });
+    // Entrance animation - use fromTo for reliability
+    if (navRef.current) {
+      gsap.fromTo(
+        navRef.current,
+        { y: -100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.2 }
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-300 ${
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-300 ${
         isScrolled ? "top-2" : "top-4"
       }`}
     >
@@ -85,7 +85,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img 
-              src="/logo.png" 
+              src="/gdg-logo.png" 
               alt="DSC DAU logo" 
               className="w-8 h-8 object-contain group-hover:scale-105 transition-transform" 
             />
