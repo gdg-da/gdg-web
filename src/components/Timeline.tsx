@@ -238,7 +238,7 @@ const Timeline = () => {
                     {/* Learn more link */}
                     {event.website?
                     <div className="mt-5 pt-4 border-t border-border">
-                      <a href="https://devolution.dscdaiict.in/">
+                      <a href={event.website}>
                         <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                           Learn More
                           <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
