@@ -2,92 +2,9 @@ import { useRef, useState } from "react";
 import { useGSAP, gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
+import teamMembers from "@/data/teamData";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const teamMembers = [
-  {
-    name: "Pranshu Patel",
-    role: "Convener",
-    image: "/photo.webp",
-    color: "gdg-blue",
-    stats: ["ReactJS", "Web3", "Solidity"],
-    quote: "Decentralizing the future, one smart contract at a time.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Kalp Chaniyara",
-    role: "Deputy Convener",
-    image: "/photo.webp",
-    color: "gdg-red",
-    stats: ["Full-stack", "Cloud", "DevOps"],
-    quote: "Building scalable solutions for real-world problems.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Atik Vohra",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-green",
-    stats: ["Web Dev", "JavaScript", "APIs"],
-    quote: "Building the web, one line at a time.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Param Savjani",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-yellow",
-    stats: ["Backend", "Python", "Cloud"],
-    quote: "Architecting solutions that scale.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Neel Khatri",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-green",
-    stats: ["ML", "Python", "Data Science"],
-    quote: "Turning data into actionable insights.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Aditya Vaish",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-yellow",
-    stats: ["MERN", "TypeScript", "System Design"],
-    quote: "Crafting elegant solutions to complex problems.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Nisarg Trivedi",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-blue",
-    stats: ["Android", "Kotlin", "Firebase"],
-    quote: "Creating seamless mobile experiences.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Dhruvam Panchal",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-red",
-    stats: ["Backend", "Node.js", "Databases"],
-    quote: "Engineering robust backend systems.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-  {
-    name: "Zalak Thakkar",
-    role: "Core Member",
-    image: "/photo.webp",
-    color: "gdg-green",
-    stats: ["UI/UX", "Frontend", "React"],
-    quote: "Designing interfaces that users love.",
-    social: { github: "#", linkedin: "#", twitter: "#" }
-  },
-];
 
 
 const TeamCard = ({ member, index }: { member: typeof teamMembers[0]; index: number }) => {
@@ -126,15 +43,15 @@ const TeamCard = ({ member, index }: { member: typeof teamMembers[0]; index: num
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  className="w-full aspect-square object-cover group-hover:grayscale-0 transition-all duration-500"
                 />
                 {/* Number badge */}
-                <div 
+                {/* <div 
                   className="absolute bottom-2 left-2 px-2 py-1 rounded-md font-mono text-[10px] font-medium text-white"
                   style={{ backgroundColor: `hsl(var(--${member.color}))` }}
                 >
                   #{String(index + 1).padStart(2, '0')}
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -196,24 +113,41 @@ const TeamCard = ({ member, index }: { member: typeof teamMembers[0]; index: num
                 Connect
               </p>
               <div className="flex gap-2">
-                <a
-                  href={member.social.github}
-                  className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
-                <a
-                  href={member.social.linkedin}
-                  className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </a>
-                <a
-                  href={member.social.twitter}
-                  className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Twitter className="w-4 h-4" />
-                </a>
+                {member.social.github ? (
+                  <a
+                    href={member.social.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${member.name} GitHub`}
+                    className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                ) : null}
+
+                {member.social.linkedin ? (
+                  <a
+                    href={member.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${member.name} LinkedIn`}
+                    className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                  </a>
+                ) : null}
+
+                {member.social.twitter ? (
+                  <a
+                    href={member.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${member.name} Twitter`}
+                    className="p-2.5 rounded-lg border border-border hover:bg-foreground hover:text-background transition-all"
+                  >
+                    <Twitter className="w-4 h-4" />
+                  </a>
+                ) : null}
               </div>
             </div>
 

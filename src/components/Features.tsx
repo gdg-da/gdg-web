@@ -30,7 +30,7 @@ const features = [
     icon: GitBranch,
     color: "gdg-green",
     span: "md:col-span-1 md:row-span-2",
-    stats: { contributors: "100+", repos: "20+" }
+    stats: { contributors: "100+", repos: "20+" } 
   },
   {
     title: "Code Dementia",
