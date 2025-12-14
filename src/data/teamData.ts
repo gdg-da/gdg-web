@@ -79,7 +79,7 @@ const teamMembers = [
         role: "Extended Core Member",
         image: "/photos/aditya.jpeg",
         color: "gdg-yellow",
-        stats: ["Python Next.js LLMOps"],
+        stats: ["Python", "Next.js", "LLMOps"],
         quote: "I turn coffee into code, code into SaaS, and SaaS into money… eventually.",
         social: {
             github: "https://github.com/vaishcodescape",
@@ -141,7 +141,7 @@ const teamMembers = [
         role: "Member",
         image: "/photos/sumit.jpg",
         color: "gdg-green",
-        stats: ["Next JS Full-stack Web3"],
+        stats: ["Next", "JS", "Full-stack", "Web3"],
         quote: "I like building software that feels simple, even when the problem isn’t.",
         social: {
             github: "https://GitHub.com/sumit-0804",
@@ -190,7 +190,7 @@ const teamMembers = [
         role: "Member",
         image: "/photos/sakina.jpg",
         color: "gdg-red",
-        stats: ["Flutter C++ Dart Mobile App development"],
+        stats: ["Flutter", "C++", "Dart", "Mobile App development"],
         quote: "Always exploring, always creating-driven by a spark for innovation and a love for bringing ideas to life.",
         social: {
             github: "https://github.com/SakinaKheraj",
@@ -203,7 +203,7 @@ const teamMembers = [
         image: "/photos/parth.jpeg",
         color: "gdg-green",
         stats: ["Android", "Java", "Flutter", "Kotlin"],
-        quote: "Loves coding untill the code throws errors at my face",
+        quote: "Loves coding untill the code throws errors at his face",
         social: {
             github: "https://github.com/Diffusity",
             linkedin: "https://www.linkedin.com/in/parth-maharaja",
