@@ -6,6 +6,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 const events = [
   {
+    id: 5,
+    title: "Dev-O-Lution",
+    date: "18th January 2026",
+    description: "Dev-o-lution is a tech conference where code evolves and innovation thrives. It has everything from workshops, talks, and mind-expanding sessions that will revolutionize your dev skills!",
+    type: "Conference",
+    icon: Calendar,
+    color: "gdg-red",
+    status: "upcoming",
+    website: "https://devolution.dscdaiict.in/"
+  },
+  {
     id: 1,
     title: "SLoP 5.0",
     date: "September - December 2025",
@@ -13,7 +24,8 @@ const events = [
     type: "Open Source",
     icon: Code,
     color: "gdg-green",
-    status: "upcoming"
+    status: "ongoing",
+    website: "https://slop.dscdaiict.in/"
   },
   {
     id: 2,
@@ -33,7 +45,7 @@ const events = [
     type: "Conference",
     icon: Globe,
     color: "gdg-blue",
-    status: "upcoming"
+    status: "completed"
   },
   {
     id: 4,
@@ -43,7 +55,8 @@ const events = [
     type: "Conference",
     icon: Calendar,
     color: "gdg-red",
-    status: "upcoming"
+    status: "completed",
+    website: "https://devolution25.dscdaiict.in/"
   },
 ];
 
@@ -55,7 +68,7 @@ const Timeline = () => {
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+
     if (prefersReducedMotion) return;
 
     // Header animation
@@ -89,7 +102,7 @@ const Timeline = () => {
     const cards = timelineRef.current?.querySelectorAll('.timeline-card');
     cards?.forEach((card, index) => {
       const direction = index % 2 === 0 ? -60 : 60;
-      
+
       gsap.from(card, {
         opacity: 0,
         x: direction,
@@ -124,7 +137,7 @@ const Timeline = () => {
     <section ref={sectionRef} id="events" className="py-24 px-4 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 via-background to-secondary/30" />
-      
+
       <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
         <div ref={headerRef} className="section-header text-center">
@@ -138,7 +151,7 @@ const Timeline = () => {
             <span className="text-gdg-red">Events</span>
           </h2>
           <p className="section-description mx-auto text-center">
-            From workshops to hackathons, we host events that inspire learning 
+            From workshops to hackathons, we host events that inspire learning
             and foster community connections.
           </p>
         </div>
@@ -146,7 +159,7 @@ const Timeline = () => {
         {/* Timeline */}
         <div ref={timelineRef} className="relative mt-16">
           {/* Central line */}
-          <div 
+          <div
             ref={lineRef}
             className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-border via-foreground/20 to-border md:-translate-x-1/2"
           />
@@ -156,17 +169,16 @@ const Timeline = () => {
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className={`timeline-card relative flex items-start ${
-                  index % 2 === 0 
-                    ? "md:flex-row flex-row" 
+                className={`timeline-card relative flex items-start ${index % 2 === 0
+                    ? "md:flex-row flex-row"
                     : "md:flex-row-reverse flex-row"
-                }`}
+                  }`}
               >
                 {/* Node marker */}
                 <div className="timeline-node absolute left-4 md:left-1/2 transform md:-translate-x-1/2 z-10">
-                  <div 
+                  <div
                     className="w-12 h-12 rounded-full border-2 border-background flex items-center justify-center shadow-lg"
-                    style={{ 
+                    style={{
                       backgroundColor: `hsl(var(--${event.color}))`,
                     }}
                   >
@@ -180,18 +192,26 @@ const Timeline = () => {
                     {/* Status indicator */}
                     {event.status === "upcoming" && (
                       <div className="absolute top-4 right-4">
-                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-gdg-green/10 text-gdg-green text-[10px] font-mono uppercase">
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-gdg-green/10 text-gdg-blue text-[10px] font-mono uppercase">
                           <span className="w-1.5 h-1.5 rounded-full bg-gdg-green animate-pulse" />
                           Upcoming
+                        </span>
+                      </div>
+                    )}
+                    {event.status === "ongoing" && (
+                      <div className="absolute top-4 right-4">
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-gdg-blue/10 text-gdg-green text-[10px] font-mono uppercase">
+                          <span className="w-1.5 h-1.5 rounded-full bg-gdg-blue animate-pulse" />
+                          Ongoing
                         </span>
                       </div>
                     )}
 
                     {/* Event type badge */}
                     <div className="flex items-center gap-3 mb-4">
-                      <span 
+                      <span
                         className="inline-flex items-center gap-2 px-3 py-1 rounded-md font-mono text-xs uppercase tracking-wide"
-                        style={{ 
+                        style={{
                           backgroundColor: `hsl(var(--${event.color}) / 0.1)`,
                           color: `hsl(var(--${event.color}))`
                         }}
@@ -216,12 +236,16 @@ const Timeline = () => {
                     </p>
 
                     {/* Learn more link */}
+                    {event.website?
                     <div className="mt-5 pt-4 border-t border-border">
-                      <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                        Learn more
-                        <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
+                      <a href="https://devolution.dscdaiict.in/">
+                        <span className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                          Learn More
+                          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </a>
+                    </div> 
+                    : <></>}
                   </div>
                 </div>
               </div>
@@ -233,7 +257,7 @@ const Timeline = () => {
         <div className="mt-20 text-center">
           <div className="inline-flex items-center gap-4 font-mono text-xs text-muted-foreground">
             <span className="w-12 h-px bg-gradient-to-r from-transparent to-border" />
-            <span>More events coming soon</span>
+            <span>Stay tuned for more events</span>
             <span className="w-12 h-px bg-gradient-to-l from-transparent to-border" />
           </div>
         </div>
