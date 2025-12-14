@@ -246,7 +246,7 @@ const Team = () => {
         </div>
 
         {/* Join CTA */}
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <p className="text-muted-foreground mb-6 font-mono text-sm">
             Want to be part of the team?
           </p>
@@ -257,7 +257,7 @@ const Team = () => {
             Apply Now
             <span className="font-mono opacity-70">→</span>
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

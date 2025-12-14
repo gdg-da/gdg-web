@@ -435,14 +435,14 @@ const Hero = () => {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          <a
+          {/* <a
             href="#slop"
             className="cta-button group inline-flex items-center gap-3 border border-border/50 bg-background/50 backdrop-blur-xl px-8 py-4 rounded-xl font-semibold text-sm shadow-xl hover:border-foreground/20 hover:bg-background/80 transition-all"
           >
             <span className="font-mono text-gdg-blue">&lt;</span>
             Explore Projects
             <span className="font-mono text-gdg-blue">/&gt;</span>
-          </a>
+          </a> */}
         </div>
 
         {/* University marker */}
